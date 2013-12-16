@@ -139,7 +139,8 @@ int ClientHandlerPrivmsg(PCLIENT pClient, char* strCommand, char* strParams)
         *str = '\0';
         break;
       }
-      *(str++) = toupper(*str);
+      *str = toupper(*str);
+      ++str;
     } while(*str);
     
     {
@@ -218,7 +219,8 @@ int ClientHandlerNotice(PCLIENT pClient, char* strCommand, char* strParams)
         *str = '\0';
         break;
       }
-      *(str++) = toupper(*str);
+      *str = toupper(*str);
+      ++str;
     } while(*str);
     
     {

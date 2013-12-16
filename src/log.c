@@ -255,7 +255,8 @@ int ProfileLogMsgClose(PPROFILELOGMSG pProfileLogMsg)
         *str = '\0';
         break;
       }
-      *(str++) = toupper(*str);
+      *str = toupper(*str);
+      ++str;
     } while(*str);
 
     if(isdigit(*strAction))

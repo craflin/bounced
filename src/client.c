@@ -227,7 +227,8 @@ int ClientHandleCommand(PCLIENT pClient, char* strCommand, unsigned int nLength)
       *strActionEnd = '\0';
       break;
     }
-    *(str++) = toupper(*str);
+    *str = toupper(*str);
+    ++str;
   } while(*str);
 
   {
