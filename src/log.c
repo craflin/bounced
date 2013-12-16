@@ -309,7 +309,7 @@ int ProfileLogMsgSend(PPROFILELOGMSG pProfileLogMsg, PCONNECTION pConnection)
 		char* strBuffer = g_strOutBuffer;
 		unsigned int nBuffer = sizeof(g_strOutBuffer)-1;
 
-		str = strchr(pProfileLogMsg->strMsg+1,':');
+		str = strstr(pProfileLogMsg->strMsg+1," :");
 		if(str)
 		{
 			str++;
