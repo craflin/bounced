@@ -1,0 +1,68 @@
+#
+# sample.motd for bounced-0.27+
+#
+# 12/02/06 addition
+#
+
+# this is a sample motd file for bounced-0.27+
+#
+# these motd variables are supported:
+#
+#    %C = current time
+#    %c = total connection count
+#    %I = the ip of the current user
+#    %l = number of total logins
+#    %B = bouncer name (BouncerName from config file)
+#    %N = nick of current user
+#    %U = name of the current user
+#    %R = real name of current user
+#    %E = email of current user
+#    %S = system info string (ex. "Windows 2000", "Linux 2.4.7-10")
+#    %u = number of users
+#    %V = server version string
+#    %W = bounced's uptime
+#    %w = time when the server was started
+#    %i = current incoming traffic (in kB/s)
+#    %o = current outgoing traffic (in kB/s)
+#    %t = current traffic (in kB/s)
+#    %D = current connection count of the bounced
+#    %U = current amount of server connections
+#    %L = current amount of client connections
+#    %J = total incoming bytes in MB
+#    %O = total outgoing bytes in MB
+#    %T = total bytes in MB
+#    %% = % (the character)
+#
+# and these motd directive are supported:
+#
+# FormatTime (type: string, default: %A, %d of %B %Y %X)
+# description: Sets the format of %C and %w. (See "man strftime" for format info.)
+#
+# FormatUptime (type: string, default: %#D days, %#H hours, %#M minutes and %#S seconds)
+# description: Sets the format of %W. (%D = days, %H = hours, %M = minutes, %S = seconds, # = no leading zeros)
+#
+# Your motd can look like this:
+
+FormatTime "%A, %d of %B %Y %X"
+FormatUptime "%#D days, %#H hours, %#M minutes and %#S seconds"
+
+- _|_|_|                                                    _|
+- _|    _|                                                  _|
+- _|    _|                                                  _|
+- _|_|_|     _|_|   _|    _| _|  _|_|   _|_|   _|_|     _|_|_|
+- _|    _| _|    _| _|    _| _|_|  _| _|     _|    _| _|    _|
+- _|    _| _|    _| _|    _| _|    _| _|     _|_|_|   _|    _|
+- _|    _| _|    _| _|    _| _|    _| _|     _|       _|    _|
+- _|_|_|     _|_|     _|_|   _|    _|   _|_|   _|_|     _|_|
+-
+- Welcome %N (%I), 
+-
+- you are on a Bounced beta server.
+- This bouncer bounces %u users.
+-
+- Bouncer Version: %V on %S
+-  Bouncer Uptime: %W
+-    Current Time: %C
+- Current Traffic: %t kB/s (%i kB/s in, %o kB/s out)
+-   Total Traffic: %T MB (%J MB in, %O MB out)
+-

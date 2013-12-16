@@ -1,0 +1,81 @@
+dnl bounced autoconf configure.in file
+AC_INIT(src/bounced.h)
+AM_INIT_AUTOMAKE(bounced, 0.27-dev4)
+AM_CONFIG_HEADER(config.h)
+
+dnl Checks for programs.
+AC_PROG_CC
+
+dnl Checks for header files.
+AC_HEADER_STDC
+
+dnl Checks for typedefs, structures, and compiler characteristics.
+dnl AC_C_CONST
+dnl AC_TYPE_SIZE_T
+dnl AC_HEADER_TIME
+
+dnl Checks for library functions.
+dnl AC_TYPE_SIGNAL
+dnl AC_FUNC_STRFTIME
+dnl AC_CHECK_FUNCS(gettimeofday select socket strdup)
+
+dnl see if we are compiling under Win32 or Unix
+AC_EGREP_CPP(yes,
+        [#if __CYGWIN__
+                yes
+        #endif],
+        [CONFIGDIR=config
+        AC_DEFINE(FD_SETSIZE,1024)],
+        [CONFIGDIR=\${localstatedir}/$PACKAGE])
+
+dnl define some values
+AC_DEFINE(CONFIGFILE,"config")
+AC_DEFINE(LOGFILE,"log")
+AC_DEFINE(MOTDFILE,"motd")
+AC_DEFINE(PIDFILE,"pid")
+AC_DEFINE(USERSFILE,"users")
+AC_DEFINE(INBUFFER,515)
+AC_DEFINE(OUTBUFFER,643)
+dnl AC_DEFINE(USE_UID,"nobody")
+dnl AC_DEFINE(USE_GID,"nobody")
+dnl AC_DEFINE(DEBUG)
+dnl AC_DEFINE(DEBUG_MEMORY)
+dnl AC_DEFINE(DEBUG_PROTOCOL)
+dnl AC_DEFINE(DEBUG_SOCKET)
+
+dnl add args
+AC_ARG_WITH(configdir,
+        [  --with-configdir=DIR    Set default config directory to DIR (localstatedir/bounced)],
+        [CONFIGDIR=$withval])
+
+AC_ARG_WITH(fd-setsize,
+        [  --with-fd-setsize=N     Set max connections with select() to N],
+        [AC_DEFINE_UNQUOTED(FD_SETSIZE,$withval)])
+
+AC_ARG_WITH(uid,
+	[  --with-uid=UID          Switch to UID if run as root],
+        [AC_DEFINE_UNQUOTED(USE_UID,"$withval")],
+        [AC_DEFINE_UNQUOTED(USE_UID,"nobody")])
+
+AC_ARG_WITH(gid,
+	[  --with-gid=GID          Switch to GID if run as root],
+        [AC_DEFINE_UNQUOTED(USE_GID,"$withval")],
+        [AC_DEFINE_UNQUOTED(USE_GID,"nobody")])
+
+AC_MSG_CHECKING(for default config directory)
+AC_SUBST(CONFIGDIR)
+AC_MSG_RESULT($CONFIGDIR)
+
+CFLAGS="-W -Wall -Wmissing-prototypes -Wcast-align -Wsign-compare $CFLAGS"
+
+dnl finish
+AC_OUTPUT(Makefile src/Makefile)
+
+ 	
+
+AC_OUTPUT_COMMANDS([echo "-----------------------------------------------------"])
+AC_OUTPUT_COMMANDS([echo " Bounced is now configured."])
+AC_OUTPUT_COMMANDS([echo ' Type "'"${ac_make}"'" to compile Bounced.'])
+AC_OUTPUT_COMMANDS([echo "-----------------------------------------------------"])
+	
+

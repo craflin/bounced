@@ -1,0 +1,747 @@
+
+12/02/06 Colin Graf <addition@users.sourceforge.net>
+
+	*tools.c, bounced.h:
+	added vstrformat, strformat for '\0' save return
+	*tools.c:
+	fixed strftimet and strftimespan for '\0' save return
+	*bounced.h:
+	removed windows definition for snprintf, and snprintf
+	increased size of OUTBUFFER which has to be greather then INBUFFER
+	changed version to 0.27-dev4
+	**.c:
+	changed use of snprintf to use of strformat
+	fixed use of strftimet and strftimetspan
+	*sample.motd:
+	updated this file
+	*motd.c:
+	fixed value of some motd vars
+
+01/21/06 Colin Graf <addition@users.sourceforge.net>
+
+	*mode.c:
+	fixed some mode attaching bugs
+
+01/16/06 Colin Graf <addition@users.sourceforge.net>
+
+	*dmemory.c, dmemory.h:
+	added function DebugMemoryCheckBlocks() for detecting "brocken" memory... (brocken = where there blockheader changed... )
+	reduced DEBUG_MEMORY_BLOCK_HASH_SIZE to 1024+1
+	*connection.c, bounced.c:
+	added DebugMemoryCheckBlocks() call after cmd handler and at main loop's end
+
+01/09/06 Colin Graf <addition@users.sourceforge.net>
+
+	*nick.c:
+	fixed new NICK request, when the current client nick is not equal the server nick
+
+01/02/06 Colin Graf <addition@users.sourceforge.net>
+
+	*nick.c:
+	fixed prefered nick reusing bug
+
+05/04/05 Colin Graf <addition@users.sourceforge.net>
+
+	*profile.c:
+	fixed bug where the bouncer doesn't free the away reason on profile attach
+	*ping.c:
+	change profile detach on ping timeout code
+
+03/31/05 Colin Graf <addition@users.sourceforge.net>
+
+	*profile.c:
+	change "profile" irccmd usage description
+	*config.c:
+	change "admin config" irccmd usage description
+	*admin.c:
+	fixed "privmsg", "notice", "wallops" irccmd usage description
+
+02/17/05 Colin Graf <addition@users.sourceforge.net>
+
+	*connection.c, bounced.c:
+	changed invalid socket detection after socket() or accept() call
+
+02/15/05 Colin Graf <addition@users.sourceforge.net>
+
+	*connection.c:
+	fixed bug in ConnectionRead()
+	fixed bug in ConnectionWrite()
+	improved ConnectionConnect()
+
+02/14/05 Colin Graf <addition@users.sourceforge.net>
+
+	*tools.c:
+	improved Log() function
+	*connection.c:
+	fixed bug in ConnectionSend()
+
+version 0.26 - 01/12/05 Colin Graf <addition@users.sourceforge.net>
+
+	*dbaccess.c:
+	added profile connect/disconnect commads to dbaccess stuff
+	*bounced.c:
+	added a ConnectionsClose() call before entering select loop
+
+01/11/05 Colin Graf <addition@users.sourceforge.net>
+
+	*user.c, dbaccess.c:
+	added some "g_bUsersChanged = 1;"
+	*connect.c, server.c, user.c, admin.c, dbaccess.c, bounced.h:
+	added special "ConnectInterface" setting for each user
+	*user.c:
+	added "/admin user email" inIRC command
+
+09/08/04 Colin Graf <addition@users.sourceforge.net>
+
+	*dbaccess.c:
+	changed some ConnectionSendFormat to ConnectionSend
+	*profile.c:
+	now an "online nick" will be set to pServer->strNick when a profile gets attached while it is connecting (hope this works)
+
+version 0.25 - 08/26/04 Colin Graf <addition@users.sourceforge.net>
+
+08/23/04 Colin Graf <addition@users.sourceforge.net>
+
+	*tools.c:
+	added check if strNick from CompareIRCAddressNick is empty
+	*server.c:
+	added check if SolveHostname was successful to avoid senceless connect tries
+	*profile.c:
+	added g_bShutdown check to ProfileConnectTimer
+	fixed error handling bug in ProfileConnect if ServerConnect() failes
+	*connect.c
+	fixed small error handling bug in ConnectionConnect if socket() failes
+
+08/18/04 Colin Graf <addition@users.sourceforge.net>
+
+	*dbaccess.c:
+	changed value of "server" in "profile get"
+
+08/16/04 Colin Graf <addition@users.sourceforge.net>
+
+	*dbaccess.c:
+	fixed "profiles" and "clients" from "admin user get"
+	fixed bug in "statistic get"
+
+version 0.24 - 08/11/04 Colin Graf <addition@users.sourceforge.net>
+
+	*user.c:
+	changed UserSetAllowedCommands
+ 
+08/10/04 Colin Graf <addition@users.sourceforge.net>
+
+	*dbaccess.c:
+	fixed bug in "config get"
+	added "server" command
+	*profile.c:
+	added CV_READONLY to "Servers"
+	*server.c:
+	added "server set"
+
+version 0.23 - 07/30/04 Colin Graf <addition@users.sourceforge.net>
+
+	*user.c:
+	added "/admin user commands" command
+
+07/27/04 Colin Graf <addition@users.sourceforge.net>
+
+	*server.c, profile.c:
+	improved autoconnect stuff
+	*config.c:
+	added support for "/config set <var>" without <value>
+	added support for "/admin config set <var>" without <value>
+	*dbaccess.c:
+	added "admin user commands" command
+
+07/25/04 Colin Graf <addition@users.sourceforge.net>
+
+	*nick.c:
+	changed success return value of ServerHandlerUnregisteredNickError to 0 (now clients can see the error message)
+	*bounced.h, bounced.c, config.c, user.c, profile.c, ...
+	changed flags stuff and removed RestrictCommands (now users have specific AllowedCommands)
+
+07/23/04 Colin Graf <addition@users.sourceforge.net>
+
+	*quit.c:
+	fixed nick reusing bug
+
+version 0.22 - 07/12/04 Colin Graf <addition@users.sourceforge.net>
+
+06/21/04 Colin Graf <addition@users.sourceforge.net>
+
+	*tools.c, bounced.c, bounced.h:
+	improved unix log file stuff
+	*profile.c
+	fixed help message bug in ClientHandlerProfile
+
+06/20/04 Colin Graf <addition@users.sourceforge.net>
+
+	*profile.c:
+	added profile name check to /profile add
+
+	*motd.c, bounced.c, bounced.h:
+	added g_strSystem
+	changed g_strMotdSystem stuff
+
+06/18/04 Colin Graf <addition@users.sourceforge.net>
+
+	*dbaccess.c:
+	extended dbaccess command
+
+06/17/04 Colin Graf <addition@users.sourceforge.net>
+
+	*config.c:
+	added CV_HIDDEN to DBAccessPassword
+
+version 0.21 - 06/17/04 Colin Graf <addition@users.sourceforge.net>
+
+06/09/04 Colin Graf <addition@users.sourceforge.net> 
+
+	*user.c:
+	improved profile status in profile list (added "connecting")
+
+05/01/04 Colin Graf <addition@users.sourceforge.net> 
+
+	*user.c:
+	fixed profile status in profile list
+
+04/29/04 Colin Graf <addition@users.sourceforge.net> 
+
+	*privmsg.c:
+	added not logging of ctcp answers to ServerHandlerNotice
+	*bounced.h:
+	changed DEFAULT_NICKLEN to 15
+	*nick.c, bounced.h:
+	improved NickIsValid (rfc specifications)
+
+04/28/04 Colin Graf <addition@users.sourceforge.net> 
+
+	*profile.c:
+	removed another debug bug in ProfileAttach
+	tryed to fix another bug in ProfileAttach
+
+04/26/04 Colin Graf <addition@users.sourceforge.net> 
+
+	*profile.c:
+	removed debug bug in ProfileAttach
+
+version 0.20 - 04/25/04 Colin Graf <addition@users.sourceforge.net> 
+
+04/19/04 Colin Graf <addition@users.sourceforge.net> 
+
+	*server.c:
+	added grepping of nick from command to ServerRegistered
+	fixed out of memory bug in ServerRegistered
+
+	*profile.c:
+	fixed bug in ProfileAttach
+
+04/13/04 Colin Graf <addition@users.sourceforge.net> 
+
+	*password.c:
+	fixed bug in ClientHandlerPassword
+
+	*user.c:
+	fixed bug in ClientSubhandlerAdminUser
+
+03/22/04 Colin Graf <addition@users.sourceforge.net> 
+
+	*config.c:
+	renamed BouncerPort to ListenPort
+	renamed BouncerInterface to ListenInterface
+
+	*connection.c, bounced.h:
+	added param strInterface to ConnectionSetInterface
+
+02/26/04 Colin Graf <addition@users.sourceforge.net> 
+
+	*config.c:
+	fixed bug in ClientSubhandlerAdminConfig
+
+version 0.19 - 02/24/04 Colin Graf <addition@users.sourceforge.net> 
+
+	*sample.motd:
+	fixed this file
+
+	*sample.config, sample.users:
+	removed these files
+
+	*Makefile.am:
+	added config scripts
+
+02/21/04 Colin Graf <addition@users.sourceforge.net> 
+
+	*client.c, profile.c:
+	added attaching of user flags (except bAdmin) on user attaching
+
+	*channel.c:
+	added resync try when receiveing /join although the channel is already joined
+
+	*profile.c:
+	fixed another nick bug
+
+	*config.c:
+	changed default BouncerName to "Bounced" instead of "localhost"
+
+02/17/04 Colin Graf <addition@users.sourceforge.net> 
+
+	*password.c, client.c, bounced.h:
+	added "password set" command
+
+	*user.c, client.c, bounced.h:
+	added "admin user password" command
+
+	*profile.c:
+	added trying to use prefered nick on profile attaching
+	improved some code
+	added using of detach nick on load
+
+	*nick.c, quit.c:
+	improved nick reusing
+
+version 0.18 - 02/13/04 Colin Graf <addition@users.sourceforge.net> 
+
+	*privmsg.c:
+	added ctcp support
+
+02/12/04 Colin Graf <addition@users.sourceforge.net> 
+
+	*mode.c:
+	fixed bug in ServerHandlerMode
+
+version 0.17 - 02/12/04 Colin Graf <addition@users.sourceforge.net> 
+
+	*nick.c:
+	fixed bug in ServerHandlerNick
+
+	*log.c, bounced.h:
+	changed unlog handler args
+
+	*config.c, bounced.h
+	removed MAX_BOUNCERNAME_LENGTH because its useless now
+
+02/11/04 Colin Graf <addition@users.sourceforge.net> 
+
+	*server.c:
+	fixed bug in ServerHandlerNumISupport
+
+version 0.16 - 02/11/04 Colin Graf <addition@users.sourceforge.net> 
+
+	changed some handler stuff
+	tryed to fix some bugs
+	added user flag p (= force profile mode use)
+	added some files and moved some funtion to them
+
+	*server.c:
+	added connecttry showing in connect client message
+
+	*client.c:
+	fixed help for admins
+
+02/04/04 Colin Graf <addition@users.sourceforge.net> 
+
+	*connection.c:
+	added DEBUG_PROTOCOL def for protocol debug messages 
+
+version 0.15 - 02/04/04 Colin Graf <addition@users.sourceforge.net> 
+
+02/01/04 Colin Graf <addition@users.sourceforge.net> 
+
+	*profile.c:
+	fixed detach nick bug
+
+01/31/04 Colin Graf <addition@users.sourceforge.net> 
+
+	*dbaccess.c, user.c, bounced.h:
+	added check if password is valid
+
+	*user.c:
+	fixed memory leak
+
+01/29/04 Colin Graf <addition@users.sourceforge.net> 
+
+	*client.c, user.c, bounced.h:
+	changed user flag stuff
+	added user flag b (blocked)
+
+	*dbaccess.c, client.c, bounced.h:
+	added dbaccess stuff
+
+version 0.14 - 01/27/04 Colin Graf <addition@users.sourceforge.net> 
+
+	*ping.c, client.c, bounced.h:
+	added answering of pings when there is no server connection
+
+	*bounced.h, profile.c, config.c, channel.c:
+	renamed AutoRejoin to ChannelRejoin
+
+	*bounced.h, profile.c, config.c, profile.c, client.c:
+	removed AutoConnect stuff
+	changed autoconnect handling
+
+	*config.c:
+	removed default value for DefaultMode
+
+	*client.c:
+	added working support for DefaultMode
+
+	*client.c, profile.c, config.c, server.c, bounced.h:
+	added support for using AWAY command... (disabled by default)
+
+	*log.c, nick.c:
+	added reusing of not alternative nick on quit and nick change
+
+	*mode.c:
+	added notice of channel key changes
+
+	*profile.c, server.c, bounced.h:
+	added Perform config variable
+
+	*admin.c, bounced.h:
+	added privmsg, notice and wallops admin command to announce messages
+
+01/26/04 Colin Graf <addition@users.sourceforge.net> 
+
+	*Makefile.am:
+	added sample.motd to Makefile.am ^^
+
+	*user.c:
+	fixed admin user attaching
+	added email to admin user list command
+	
+	*client.c:
+	admins are now allowed to have more then UserMaxClients clients
+	admins are now allowed to have more then UserMaxProfiles profiles
+
+version 0.13 - 01/26/04 Colin Graf <addition@users.sourceforge.net> 
+
+	*motd.c:
+	added this file
+
+	*client.c, motd.c, bounced.h
+	added support for own motd
+
+	*user.c, client.c;
+	changed user file format
+	fixed user file updating
+
+	*sample.motd:
+	added this file
+
+	*bounced.c:
+	changed "killall -HUP" handling
+	added dump timer
+
+01/24/04 Colin Graf <addition@users.sourceforge.net> 
+
+	*config.c, client.c, profile.c, bounced.h
+	added RestrictCommands config var
+
+version 0.12 - 01/17/04 Colin Graf <addition@users.sourceforge.net> 
+	
+	*sample.config:
+	updated this file
+
+01/16/04 Colin Graf <addition@users.sourceforge.net> 
+
+	*client.c:
+	fixed handler not found crash
+	
+	*bounced.h, channel.c, profile.c:
+	added support for LogChannel
+
+	*profile.c:
+	fixed not joining channels bug
+
+01/15/04 Colin Graf <addition@users.sourceforge.net> 
+
+	*bounced.h, config.c:
+	renamed some config variables
+	added config variables for default profile settings
+
+	*bounced.h, profile.c:
+	added default values
+	added some config variables
+
+01/13/04 Colin Graf <addition@users.sourceforge.net> 
+
+	*bounced.h, user.c:
+	added inirc user editing
+
+	*bounced.h, config.c:
+	added inirc config editing
+	added config dumping
+
+01/05/04 Colin Graf <addition@users.sourceforge.net> 
+
+	*client.c:
+	changed /help message
+	
+	*bounced.h, admin.c, client.c:
+	added admin handler
+
+	*bounced.h, config.c:
+	added admin user config vars
+
+version 0.11 - 01/04/04 Colin Graf <addition@users.sourceforge.net> 
+
+	*bounced.h nick.c server.c profile.c:
+	tryed to fix nick bug
+
+version 0.10 - 01/02/04 Colin Graf <addition@users.sourceforge.net> 
+
+	*channel.c profile.c:
+	fixed join nick name bug
+
+	*nick.c:
+	fixed not using of alternativenick bug
+
+version 0.9 - 01/01/04 Colin Graf <addition@users.sourceforge.net> 
+
+	*channel.c, log.c:
+	fixed log join bug
+
+	*bounced.c and other files:
+	improved stats
+	improved log stuff
+
+12/29/03 Colin Graf <addition@users.sourceforge.net> 
+
+	*mode.c:
+	fixed mode bug in ClientHandlerMode
+
+	*server.c:
+	supressed part message sending on shutdown
+
+	*connection.c:
+	fixed bouncer crash on "server disconnect" while the bouncer trys to connect
+
+	*nick.c:
+	added loop protection when detachnick == nick
+
+version 0.8 - 12/29/03 Colin Graf <addition@users.sourceforge.net> 
+
+	*mode.c, log.c:
+	removed invalid use of "FALSE" (debug only)
+
+	*mode.c:
+	fixed bug in ClientHandlerMode
+
+	*log.c:
+	fixed user list bug
+
+	*config.c, profile.c:
+	added support for quotet config values
+
+	*mode.c:
+	fixed mode bug in ServerHandlerMode
+
+version 0.7 - 12/29/03 Colin Graf <addition@users.sourceforge.net> 
+
+	*log.c:
+	added this file
+
+	*dmemory.c, dmemory.h:
+	added these files
+
+	*all files:
+	added dmemory support (for memory debugging)
+
+	*server.c, client.c, log.c, mode.c, nick.c, channel.c, profile.c, bounced.h:
+	added logging support
+
+	*profile.c:
+	changed profile config rehashing stuff (stop of profile settings overwriting)
+
+	and maybe more stuff :)
+
+version 0.6 - 12/14/03 Colin Graf <addition@users.sourceforge.net>
+
+	*channel.c, bounced.h:
+	changed channel stuff
+
+	*server.c, client.c:
+	changed handler table stuff
+	changed forwarding stuff
+
+12/09/03 Colin Graf <addition@users.sourceforge.net>
+
+	*channel.c:
+	added this file
+
+version 0.5 - 12/07/03 Colin Graf <addition@users.sourceforge.net>
+
+	*server.c:
+	added autorejoin support
+
+	*profile.c, server.c:
+	added sending of channel part messages on server disconnect
+
+	*client.c:
+	added /help command
+
+12/04/03 Colin Graf <addition@users.sourceforge.net>
+
+	*client.c, server.c:
+	added support for current joined channels storing in c_strChannels
+
+	*profile.c, bounced.h:
+	added c_bAutoRejoin
+
+12/03/03 Colin Graf <addition@users.sourceforge.net>
+
+	*profile.c, bounced.h:
+	addded c_strChannels
+	added ProfileConfigFindVar
+
+	*client.c:
+	improved ClientHandlerServer using ProfileConfigFindVar
+
+12/02/03 Colin Graf <addition@users.sourceforge.net>
+
+	*profile.c:
+	added CV_READONLY flag to Name and Mode
+	fixed huge bug in ProfileAttach()
+
+version 0.4 - 12/02/03 Colin Graf <addition@users.sourceforge.net>
+
+	*profile.c, bounced.h, user.c:
+	added user config saving and loading
+
+	*topic.c, server.c, bouncer.h:
+	removed topic storing stuff
+	removed topic.c
+
+11/30/03 Colin Graf <addition@users.sourceforge.net>
+
+    *bounced.h, user.c, client.c:
+	added USER_CLIENT_LIST
+
+	*server.c, profile.c:
+	added support ConnectMaxTries
+	added support ConnectTimer
+
+	*client.c:
+	added support UserMaxProfiles
+	added support UserMaxClients
+
+11/10/03 Colin Graf <addition@users.sourceforge.net>
+
+	*profile.c, server.c:
+	added support for connecting with detached nick
+
+	*config.c, bouncer.h:
+	renamed Name to BouncerName
+	renamed ListenInferface to BouncerInternface
+	renamed ListenPort to BouncerPort
+	added ConnectMaxTries
+	added ConnectTimer
+	added UserMaxProfiles
+	added UserMaxClients
+
+	*config.c, profile.c:
+	added size limits for config variables
+
+version 0.3 - 11/09/03 Colin Graf <addition@users.sourceforge.net>
+
+	*bounced.dsp, Makefile.am:
+	added ping.c, topic.c, nick.c, mode.c
+	moved some handlers to these files
+
+	*nick.c, server.c, bounced.c:
+	added nickchange support for welcome msg
+
+	*mode.c:
+	fixed mode bug
+
+	*config.c:
+	added length check of c_strName
+
+	*client.c, profile.c, server.c, bounced.h:
+	added support for password protected servers
+
+version 0.2 - 11/08/03 Colin Graf <addition@users.sourceforge.net>
+
+	*profile.c, server.c, bounced.h:
+	added topic buffering
+	added autoconnect
+	added support for an alternative nick
+
+	*bounced.c:
+	added connections line to StatsTimer
+
+11/06/03 Colin Graf <addition@users.sourceforge.net>
+
+	*client.c, profile.c, server.c, bounced.h:
+	changed client mode stuff
+
+11/05/03 Colin Graf <addition@users.sourceforge.net>
+
+	*client.c, profile.c, bounced.h:
+	added /config command
+
+11/04/03 Colin Graf <addition@users.sourceforge.net>
+
+	*user.c:
+	fixed users file reload bug
+
+	*server.c, profile.c, client.c, bounced.h:
+	improved user mode buffering and attaching
+
+	*tools.c:
+	fixed bug in SplitLine
+
+	*user.c:
+	added UserIsNameValid check to UsersLoad
+
+version 0.1 - 11/04/03 Colin Graf <addition@users.sourceforge.net>
+
+	this is the first release of bounced. the package contains these files:
+
+	*src/bounced.dsp, src/bounced.dsw:
+	Microsoft Visual C++ project files
+
+	*bounced.c, bounced.h:
+	main source files
+
+	*client.c, config.c, connection.c, password.c, profile.c, server.c, tools.c, user.c:
+	other source files
+
+	*md5.c, md5.h:
+	md5 sum functions written by Ulrich Drepper
+
+	*timer.c, timer.h:
+	timer functions written by me (Colin Graf)
+
+	*list.h, hash.h, hashlist.h:
+	list, hash and hashlist macros written by me (Colin Graf)
+
+	*AUTHORS, COPYING, INSTALL, NEWS, README:
+	gnu files
+
+	*TODO:
+	TODO file
+
+	*sample.config, sample.users:
+	sample config files
+
+	*ChangeLog:
+	this file
+
+	*and of course autoconf and automake files
+
+	the current features are:
+	- profile structure
+	- multiserver support
+	- multiclient support
+	- multiuser support
+	- inIRC configuration
+
+	and these features are planed:
+	- inIRC administration
+	- motd support
+	- channel users/topic buffering
+	- log and replay function
+	... (see TODO file)
+
+

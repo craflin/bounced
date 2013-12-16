@@ -1,0 +1,22 @@
+
+change:
+	admin subhandler message map => iarh work!
+	user flag changes zu clients setzen, die gerade online sind
+	wenn ein user ein block flag bekommt, dann clients die gerade online sind kicken
+	dieses checken nach ';' im server string von den haendlern (user und dbaccess) entfernen und direkt zur ConfigAddVar bzw ConfigRemoveVar funktion hinzufügen
+	message format machen
+	wenn kein alternative nick gesetzt ist aber einer gebraucht wird, dann automatisch <nick>_ verwenden!
+
+add:
+	add "/<config directive>" commands
+	profile erstell datum und zuletzt attached datum speichern?
+	beim dumpen von files erst die alte datei ueberschreiben, wenn das dumpen erfolgreich war
+	wenn einer neuer benutzer hinzugefügt wird, dann sollte versucht werden das config.benutzer file zu laden?
+	c_strAllowedServers und ServerCheckServers oder so hinzufügen
+
+fix:
+	default allowed commands auf validität prüfen
+	man kann bei phpBounced keine < und > im timestamp format angeben 
+
+other:
+	create windows installer
