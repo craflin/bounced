@@ -313,7 +313,7 @@ int ProfileLogMsgSend(PPROFILELOGMSG pProfileLogMsg, PCONNECTION pConnection)
     str = strstr(pProfileLogMsg->strMsg+1," :");
     if(str)
     {
-      str++;
+      str += 2;
 
       if(!strncmp(str,"\001ACTION ",8))
       {
