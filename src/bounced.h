@@ -266,14 +266,14 @@ LIST_INITTYPE(MOTDVAR_LIST);
 LIST_INITTYPE(MOTD_LIST);
 
 /* config */
-#define CV_STR			0x00
-#define CV_UINT			0x01
-#define CV_BOOL			0x02
-#define CV_TYPEMASK		0x0F
-#define	CV_HIDDEN		0x10 /* config.c only */
-#define CV_READONLY		0x10 /* profile.c only */
-#define	CV_ONCE			0x20 /* config.c only */
-#define CV_NODUMP		0x40 /* config.c only */
+#define CV_STR      0x00
+#define CV_UINT      0x01
+#define CV_BOOL      0x02
+#define CV_TYPEMASK    0x0F
+#define  CV_HIDDEN    0x10 /* config.c only */
+#define CV_READONLY    0x10 /* profile.c only */
+#define  CV_ONCE      0x20 /* config.c only */
+#define CV_NODUMP    0x40 /* config.c only */
 #define CV_DYNDEFAULT   0x80 /* profile.c only */
 
 #define CONFIGVAR_TABLE_START struct tagCONFIGVAR g_pConfigVars[] = {
@@ -282,11 +282,11 @@ LIST_INITTYPE(MOTD_LIST);
 #define CONFIGVAR_COUNT (sizeof(g_pConfigVars)/sizeof(struct tagCONFIGVAR))
 typedef struct tagCONFIGVAR
 {
-	char* strVarName;
+  char* strVarName;
     unsigned char cType;
     void* pVar; /* (char**), (unsigned int*) or (char*)[bool] */
     void* pDefault;
-	unsigned int nSize;
+  unsigned int nSize;
 } *PCONFIGVAR;
 
 /* profile config */
@@ -296,12 +296,12 @@ typedef struct tagCONFIGVAR
 #define PROFILECONFIGVAR_COUNT (sizeof(g_pProfileConfigVars)/sizeof(struct tagPROFILECONFIGVAR))
 typedef struct tagPROFILECONFIGVAR
 {
-	char* strVarName;
+  char* strVarName;
     unsigned char cType;
-	void* pVarPos;
+  void* pVarPos;
     void* pVar;
-	void* pDefault;
-	unsigned int nSize;
+  void* pDefault;
+  unsigned int nSize;
 } *PPROFILECONFIGVAR;
 
 /* client handlers */
@@ -316,15 +316,15 @@ extern HASH(CLIENTHANDLER_HASH) g_hashClientHandlers;
 typedef int (*PCLIENTHANDLERPROC)(struct tagCLIENT* pClient, char* strCommand, char* strParams);
 struct tagCLIENTHANDLER
 {
-	char* strAction;
+  char* strAction;
     PCLIENTHANDLERPROC pProc;
-	unsigned char nFlags;
-	HASHLINK(CLIENTHANDLER_HASH);
+  unsigned char nFlags;
+  HASHLINK(CLIENTHANDLER_HASH);
 };
 
-#define CHF_NORMAL		0x00 /* std irc command */
-#define CHF_BOUNCER		0x01 /* bouncer extention */
-#define CHF_ADMIN		0x02 /* for /admin command */
+#define CHF_NORMAL    0x00 /* std irc command */
+#define CHF_BOUNCER    0x01 /* bouncer extention */
+#define CHF_ADMIN    0x02 /* for /admin command */
 
 /* server handlers */
 #define SERVERHANDLER_TABLE_START HASH(SERVERHANDLER_HASH) g_hashServerHandlers; struct tagSERVERHANDLER g_pServerHandlers[] = {
@@ -337,9 +337,9 @@ struct tagCLIENTHANDLER
 typedef int (*PSERVERHANDLERPROC)(struct tagSERVER* pServer, char* strCommand, char* strParams);
 struct tagSERVERHANDLER
 {
-	char* strAction;
+  char* strAction;
     PSERVERHANDLERPROC pProc;
-	HASHLINK(SERVERHANDLER_HASH);
+  HASHLINK(SERVERHANDLER_HASH);
 };
 
 #define PROFILEHANDLERUNLOG_TABLE_START HASH(PROFILEHANDLERUNLOG_HASH) g_hashProfileHandlersUnlog; struct tagPROFILEHANDLER g_pProfileHandlersUnlog[] = {
@@ -349,38 +349,38 @@ struct tagSERVERHANDLER
 typedef int (*PPROFILEHANDLERPROC)(struct tagPROFILELOGMSG* pProfileLogMsg, char* strAction, char* strParams);
 struct tagPROFILEHANDLER
 {
-	char* strAction;
+  char* strAction;
     PPROFILEHANDLERPROC pProc;
-	HASHLINK(PROFILEHANDLERUNLOG_HASH);
+  HASHLINK(PROFILEHANDLERUNLOG_HASH);
 };
 
 /* structs */
 
 typedef struct tagCONNECTION
 {
-	LISTLINK(CONNECTION_LIST);
-	LISTLINK(FDR_LIST);
-	LISTLINK(FDW_LIST);
-	LISTLINK(FDE_LIST);
-	LISTLINK(CONNECTIONASYNC_LIST);
-	
-	char bClosing;
+  LISTLINK(CONNECTION_LIST);
+  LISTLINK(FDR_LIST);
+  LISTLINK(FDW_LIST);
+  LISTLINK(FDE_LIST);
+  LISTLINK(CONNECTIONASYNC_LIST);
+  
+  char bClosing;
 
-	SOCKET s;
-	unsigned int nIP;
-	unsigned short nPort;
-	time_t timeConnected;
+  SOCKET s;
+  unsigned int nIP;
+  unsigned short nPort;
+  time_t timeConnected;
 
-	char* strInBuffer;
-	unsigned int nInBuffer;
+  char* strInBuffer;
+  unsigned int nInBuffer;
 
-	char* strOutBuffer;
-	unsigned int nOutBuffer;
-	unsigned int nOutBufferUse;
-	unsigned int nOutBufferOffset;
+  char* strOutBuffer;
+  unsigned int nOutBuffer;
+  unsigned int nOutBufferUse;
+  unsigned int nOutBufferOffset;
 
-	unsigned char cType;
-	void* pData;
+  unsigned char cType;
+  void* pData;
 } CONNECTION, *PCONNECTION;
 
 #define CT_CLIENT 1
@@ -388,26 +388,26 @@ typedef struct tagCONNECTION
 
 typedef struct tagCLIENT
 {
-	LISTLINK(CLIENT_LIST);
-	LISTLINK(PROFILE_CLIENT_LIST);
-	LISTLINK(USER_CLIENT_LIST);
+  LISTLINK(CLIENT_LIST);
+  LISTLINK(PROFILE_CLIENT_LIST);
+  LISTLINK(USER_CLIENT_LIST);
 
-	struct tagCONNECTION* pConnection;
-	struct tagUSER* pUser;
-	struct tagPROFILE* pProfile;
+  struct tagCONNECTION* pConnection;
+  struct tagUSER* pUser;
+  struct tagPROFILE* pProfile;
 
-	char* strName;
-	char pcMD5Pass[16];
-	char* strNick;
-	char* strRealName;
-	char bRegistered:1;
-	char bWantPong:1;
-	char bAdmin:1;
-	char cReserve:5;
+  char* strName;
+  char pcMD5Pass[16];
+  char* strNick;
+  char* strRealName;
+  char bRegistered:1;
+  char bWantPong:1;
+  char bAdmin:1;
+  char cReserve:5;
 
-	char* strMode;
+  char* strMode;
 
-	unsigned char cMessageMode;
+  unsigned char cMessageMode;
 
 } CLIENT, *PCLIENT;
 
@@ -417,165 +417,165 @@ typedef struct tagCLIENT
 
 typedef struct tagSERVER
 {
-	LISTLINK(SERVER_LIST);
+  LISTLINK(SERVER_LIST);
 
-	struct tagCONNECTION* pConnection;
-	struct tagPROFILE* pProfile;
+  struct tagCONNECTION* pConnection;
+  struct tagPROFILE* pProfile;
 
-	char* strPassword;
-	char* strServer;
-	unsigned short nPort;
-	char cInList;
-	char bConnected:1;
-	char bRegistered:1;
-	char cReserve:6;
+  char* strPassword;
+  char* strServer;
+  unsigned short nPort;
+  char cInList;
+  char bConnected:1;
+  char bRegistered:1;
+  char cReserve:6;
 
-	LIST(SERVER_SERVERWELCOMEMSG_LIST) listServerWelcomeMsgs;
-	struct tagSERVERWELCOMEMSG* pLastServerWelcomeMsg;
+  LIST(SERVER_SERVERWELCOMEMSG_LIST) listServerWelcomeMsgs;
+  struct tagSERVERWELCOMEMSG* pLastServerWelcomeMsg;
 
-	char* strNick;
-	char* strMode;
+  char* strNick;
+  char* strMode;
 
 } SERVER, *PSERVER;
 
 typedef struct tagPROFILECHANNEL
 {
-	HASHLISTLINK(PROFILE_PROFILECHANNEL_HASHLIST);
-	struct tagPROFILE* pProfile;
-	char* strName;
-	char* strKey;
-	char bSyncing:1;
-	char bSynced:1;
-	char bLog:1;
-	char cReserve:5;
+  HASHLISTLINK(PROFILE_PROFILECHANNEL_HASHLIST);
+  struct tagPROFILE* pProfile;
+  char* strName;
+  char* strKey;
+  char bSyncing:1;
+  char bSynced:1;
+  char bLog:1;
+  char cReserve:5;
 
-	HASHLIST(PROFILECHANNEL_PROFILECHANNELUSER_HASHLIST) hashlistProfileChannelUsers;
-	char* strMode;
-	time_t timeCreate;
-	char* strTopic;
-	char* strTopicSetBy;
-	time_t timeTopicSetTime;
-	
-	HASHLIST(PROFILECHANNEL_PROFILECHANNELUSER_HASHLIST) hashlistLogProfileChannelUsers;
-	char* strLogMode;
-	time_t timeLogCreate;
-	char* strLogTopic;
-	char* strLogTopicSetBy;
-	time_t timeLogTopicSetTime;
-	char* strLogNick;
+  HASHLIST(PROFILECHANNEL_PROFILECHANNELUSER_HASHLIST) hashlistProfileChannelUsers;
+  char* strMode;
+  time_t timeCreate;
+  char* strTopic;
+  char* strTopicSetBy;
+  time_t timeTopicSetTime;
+  
+  HASHLIST(PROFILECHANNEL_PROFILECHANNELUSER_HASHLIST) hashlistLogProfileChannelUsers;
+  char* strLogMode;
+  time_t timeLogCreate;
+  char* strLogTopic;
+  char* strLogTopicSetBy;
+  time_t timeLogTopicSetTime;
+  char* strLogNick;
 
-	LIST(PROFILECHANNEL_PROFILELOGMSG_LIST) listProfileLogMsgs;
-	struct tagPROFILELOGMSG* pLastProfileLogMsg;
+  LIST(PROFILECHANNEL_PROFILELOGMSG_LIST) listProfileLogMsgs;
+  struct tagPROFILELOGMSG* pLastProfileLogMsg;
 
 } PROFILECHANNEL, *PPROFILECHANNEL;
 
 typedef struct tagPROFILECHANNELUSER
 {
-	HASHLISTLINK(PROFILECHANNEL_PROFILECHANNELUSER_HASHLIST);
-	struct tagPROFILECHANNEL* pProfileChannel;
-	char* strNick;
-	char cPrefix;
+  HASHLISTLINK(PROFILECHANNEL_PROFILECHANNELUSER_HASHLIST);
+  struct tagPROFILECHANNEL* pProfileChannel;
+  char* strNick;
+  char cPrefix;
 #ifdef DEBUG
-	char bLog;
+  char bLog;
 #endif
 } PROFILECHANNELUSER, *PPROFILECHANNELUSER;
 
 typedef struct tagPROFILELOGMSG
 {
-	LISTLINK(PROFILE_PROFILELOGMSG_LIST);
+  LISTLINK(PROFILE_PROFILELOGMSG_LIST);
 
-	LISTLINK(PROFILECHANNEL_PROFILELOGMSG_LIST);
-	struct tagPROFILECHANNEL* pProfileChannel;
+  LISTLINK(PROFILECHANNEL_PROFILELOGMSG_LIST);
+  struct tagPROFILECHANNEL* pProfileChannel;
 
-	LISTLINK(PROFILE_MSGPROFILELOGMSG_LIST);
-	struct tagPROFILE* pProfile;
+  LISTLINK(PROFILE_MSGPROFILELOGMSG_LIST);
+  struct tagPROFILE* pProfile;
 
-	unsigned int nID;
-	char* strMsg;
-	unsigned int nMsgLength;
-	time_t timeMsg;
+  unsigned int nID;
+  char* strMsg;
+  unsigned int nMsgLength;
+  time_t timeMsg;
 
-	unsigned char cFlags;
+  unsigned char cFlags;
 
 } PROFILELOGMSG, *PPROFILELOGMSG;
 
-#define PLMF_LISTITEM		0x01
-#define PLMF_TIMESTAMP		0x02
-#define PLMF_ADJUSTNICKLEN	0x04
+#define PLMF_LISTITEM    0x01
+#define PLMF_TIMESTAMP    0x02
+#define PLMF_ADJUSTNICKLEN  0x04
 
 typedef struct tagSERVERWELCOMEMSG
 {
-	LISTLINK(SERVER_SERVERWELCOMEMSG_LIST);
-	unsigned short nCode;
-	char* strMsg;
+  LISTLINK(SERVER_SERVERWELCOMEMSG_LIST);
+  unsigned short nCode;
+  char* strMsg;
 } SERVERWELCOMEMSG, *PSERVERWELCOMEMSG;
 
 typedef struct tagUSER
 {
-	HASHLISTLINK(USER_HASHLIST);
+  HASHLISTLINK(USER_HASHLIST);
 
-	char* strName;
-	char pcMD5Pass[16];
-	char* strEmail;
-	time_t timeRegistered;
-	time_t timeLastSeen;
+  char* strName;
+  char pcMD5Pass[16];
+  char* strEmail;
+  time_t timeRegistered;
+  time_t timeLastSeen;
 
-	char bConfigChanged:1;
-	char cReserve:7;
-	char strFlags[sizeof(USERFLAGS)];
-	char* strAllowedCommands;
-	char* strConnectInterface; /* ConnectInterface overwrite */
+  char bConfigChanged:1;
+  char cReserve:7;
+  char strFlags[sizeof(USERFLAGS)];
+  char* strAllowedCommands;
+  char* strConnectInterface; /* ConnectInterface overwrite */
 
-	HASHLIST(USER_PROFILE_HASHLIST) hashlistProfiles;
-	LIST(USER_CLIENT_LIST) listClients;
+  HASHLIST(USER_PROFILE_HASHLIST) hashlistProfiles;
+  LIST(USER_CLIENT_LIST) listClients;
 } USER, *PUSER;
 
 typedef struct tagPROFILE
 {
-	HASHLISTLINK(USER_PROFILE_HASHLIST);
+  HASHLISTLINK(USER_PROFILE_HASHLIST);
 
-	char* strName;
-	struct tagUSER* pUser;
-	struct tagSERVER* pServer;
-	char cInList;
-	unsigned int nLogID;
-	char* strPrefix;
-	char* strChanModes;
-	unsigned int nNickLen;
+  char* strName;
+  struct tagUSER* pUser;
+  struct tagSERVER* pServer;
+  char cInList;
+  unsigned int nLogID;
+  char* strPrefix;
+  char* strChanModes;
+  unsigned int nNickLen;
 
-	int iLastConnectServer;
-	unsigned int nConnectTry;
-	PTIMER pConnectTimer;
-	char* strNick; /* like pClient->strNick */
-	char* strAwayReason; /* detach reason */
+  int iLastConnectServer;
+  unsigned int nConnectTry;
+  PTIMER pConnectTimer;
+  char* strNick; /* like pClient->strNick */
+  char* strAwayReason; /* detach reason */
 
-	char* c_strNick; /* prefered nick */
-	char* c_strMode;
-	char* c_strAlternativeNick;
-	char* c_strDetachNick;
-	char* c_strRealName;
-	char* c_strServers;
-	char c_bChannelRejoin;
-	char* c_strChannels;
-	char* c_strLogChannels;
-	char c_bLogChannelAdjustNicklen;
-	unsigned int c_nLogChannelMessages;
-	char* c_strLogChannelTimestampFormat;
-	unsigned int c_nLogPrivateMessages;
-	char* c_strLogPrivateTimestampFormat;
-	char c_bAway;
-	char* c_strAwayDefaultReason;
-	char* c_strPerform;
+  char* c_strNick; /* prefered nick */
+  char* c_strMode;
+  char* c_strAlternativeNick;
+  char* c_strDetachNick;
+  char* c_strRealName;
+  char* c_strServers;
+  char c_bChannelRejoin;
+  char* c_strChannels;
+  char* c_strLogChannels;
+  char c_bLogChannelAdjustNicklen;
+  unsigned int c_nLogChannelMessages;
+  char* c_strLogChannelTimestampFormat;
+  unsigned int c_nLogPrivateMessages;
+  char* c_strLogPrivateTimestampFormat;
+  char c_bAway;
+  char* c_strAwayDefaultReason;
+  char* c_strPerform;
 
-	LIST(PROFILE_CLIENT_LIST) listClients;
-	HASHLIST(PROFILE_PROFILECHANNEL_HASHLIST) hashlistProfileChannels;
+  LIST(PROFILE_CLIENT_LIST) listClients;
+  HASHLIST(PROFILE_PROFILECHANNEL_HASHLIST) hashlistProfileChannels;
 
-	LIST(PROFILE_PROFILELOGMSG_LIST) listProfileLogMsgs;
-	struct tagPROFILELOGMSG* pLastProfileLogMsg;
-	struct tagPROFILELOGMSG* pFirstListProfileLogMsg;
+  LIST(PROFILE_PROFILELOGMSG_LIST) listProfileLogMsgs;
+  struct tagPROFILELOGMSG* pLastProfileLogMsg;
+  struct tagPROFILELOGMSG* pFirstListProfileLogMsg;
 
-	LIST(PROFILE_MSGPROFILELOGMSG_LIST) listMsgProfileLogMsgs;
-	struct tagPROFILELOGMSG* pLastMsgProfileLogMsg;
+  LIST(PROFILE_MSGPROFILELOGMSG_LIST) listMsgProfileLogMsgs;
+  struct tagPROFILELOGMSG* pLastMsgProfileLogMsg;
 
 } PROFILE, *PPROFILE;
 
@@ -584,16 +584,16 @@ typedef void (*PMOTDVARPROC) (struct tagMOTDVAR*, struct tagCLIENT*);
 
 typedef struct tagMOTDVAR
 {
-	LISTLINK(MOTDVAR_LIST);
-	char cName;
+  LISTLINK(MOTDVAR_LIST);
+  char cName;
     PMOTDVARPROC pMotdVarProc;
     void* pVar;
-	unsigned char cType;
+  unsigned char cType;
 } *PMOTDVAR;
 
-#define MOTDV_NORMAL	0x00
-#define MOTDV_REFRESH	0x01
-#define MOTDV_POINTER	0x02
+#define MOTDV_NORMAL  0x00
+#define MOTDV_REFRESH  0x01
+#define MOTDV_POINTER  0x02
 
 #define MOTDVAR_TABLE_START static struct tagMOTDVAR g_pMotdVars[] = {
 #define MOTDVAR_TABLE_END };
@@ -601,9 +601,9 @@ typedef struct tagMOTDVAR
 
 typedef struct tagMOTDSTR
 {
-	LISTLINK(MOTD_LIST);
-	int i; /* length */ /* -1 = str is variable; else str should be deleteted */
-	void* p; /* 0 = line end */ /* if i == -1 p is PMOTDVAR */
+  LISTLINK(MOTD_LIST);
+  int i; /* length */ /* -1 = str is variable; else str should be deleteted */
+  void* p; /* 0 = line end */ /* if i == -1 p is PMOTDVAR */
 } MOTDSTR, *PMOTDSTR;
 
 /* global variables */

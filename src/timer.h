@@ -20,12 +20,12 @@ typedef void (*PTIMERPROC) (void *);
 
 typedef struct tagTIMER
 {
-	struct tagTIMER * pNext;
-	PTIMERPROC pTimerProc;
-	void* pParams;
-	time_t timeNext;
-	time_t timeInterval;
-	int iEvents;
+  struct tagTIMER * pNext;
+  PTIMERPROC pTimerProc;
+  void* pParams;
+  time_t timeNext;
+  time_t timeInterval;
+  int iEvents;
 } TIMER, *PTIMER;
 
 extern PTIMER TimerAdd(time_t timeNow, time_t timeInterval, int iEvents, PTIMERPROC pTimerProc, void* pParams);

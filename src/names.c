@@ -23,70 +23,70 @@
 
 int ServerHandlerNumNamReply(PSERVER pServer, char* strCommand, char* strParams)
 {
-	char* strArg[3];
+  char* strArg[3];
 
-	if(SplitIRCParams(strParams,strArg,sizeof(strArg)/sizeof(*strArg),1) == sizeof(strArg)/sizeof(*strArg))
-	{
-		PPROFILECHANNEL pProfileChannel;
-		PPROFILE pProfile;
+  if(SplitIRCParams(strParams,strArg,sizeof(strArg)/sizeof(*strArg),1) == sizeof(strArg)/sizeof(*strArg))
+  {
+    PPROFILECHANNEL pProfileChannel;
+    PPROFILE pProfile;
 
-		pProfile = pServer->pProfile;
-		HASHLIST_LOOKUP(PROFILE_PROFILECHANNEL_HASHLIST,pProfile->hashlistProfileChannels,strArg[1],pProfileChannel);
-		if(pProfileChannel)
-		{
-			char* str,*strEnd;
-			char cPrefix;
+    pProfile = pServer->pProfile;
+    HASHLIST_LOOKUP(PROFILE_PROFILECHANNEL_HASHLIST,pProfile->hashlistProfileChannels,strArg[1],pProfileChannel);
+    if(pProfileChannel)
+    {
+      char* str,*strEnd;
+      char cPrefix;
 
-			ProfileLogMsgCreate(0,pProfileChannel,++pProfile->nLogID,g_strCurrentCommand,g_nCurrentCommandLength,PLMF_LISTITEM);
+      ProfileLogMsgCreate(0,pProfileChannel,++pProfile->nLogID,g_strCurrentCommand,g_nCurrentCommandLength,PLMF_LISTITEM);
 
-			if(!pServer->cInList)
-				HASHLIST_REMOVE_ALL(PROFILECHANNEL_PROFILECHANNELUSER_HASHLIST,pProfileChannel->hashlistProfileChannelUsers);
-			pServer->cInList++;
+      if(!pServer->cInList)
+        HASHLIST_REMOVE_ALL(PROFILECHANNEL_PROFILECHANNELUSER_HASHLIST,pProfileChannel->hashlistProfileChannelUsers);
+      pServer->cInList++;
 
-			str = strArg[2];
-			do
-			{
-				strEnd = strchr(str,' ');
-				if(strEnd)
-					*(strEnd++) = '\0';
-				if(*str)
-				{
-					if(IsIRCNickPrefix(*str,pProfile->strPrefix))
-					{
-						cPrefix = *str;
-						str++;
-					}
-					else
-						cPrefix = 0;
-					if(*str)
-						ProfileChannelUserCreate(pProfileChannel,str,cPrefix,0);
-				}
-				str = strEnd;
-			} while(str);
-		}
-	}
+      str = strArg[2];
+      do
+      {
+        strEnd = strchr(str,' ');
+        if(strEnd)
+          *(strEnd++) = '\0';
+        if(*str)
+        {
+          if(IsIRCNickPrefix(*str,pProfile->strPrefix))
+          {
+            cPrefix = *str;
+            str++;
+          }
+          else
+            cPrefix = 0;
+          if(*str)
+            ProfileChannelUserCreate(pProfileChannel,str,cPrefix,0);
+        }
+        str = strEnd;
+      } while(str);
+    }
+  }
 
-	return 0;
-	strCommand = 0;
+  return 0;
+  strCommand = 0;
 }
 
 int ServerHandlerNumEndOfNames(PSERVER pServer, char* strCommand, char* strParams)
 {
-	char* strArg[1];
+  char* strArg[1];
 
-	if(SplitIRCParams(strParams,strArg,sizeof(strArg)/sizeof(*strArg),0) == sizeof(strArg)/sizeof(*strArg))
-	{
-		PPROFILECHANNEL pProfileChannel;
-		PPROFILE pProfile;
+  if(SplitIRCParams(strParams,strArg,sizeof(strArg)/sizeof(*strArg),0) == sizeof(strArg)/sizeof(*strArg))
+  {
+    PPROFILECHANNEL pProfileChannel;
+    PPROFILE pProfile;
 
-		pProfile = pServer->pProfile;
-		HASHLIST_LOOKUP(PROFILE_PROFILECHANNEL_HASHLIST,pProfile->hashlistProfileChannels,strArg[0],pProfileChannel);
-		if(pProfileChannel)
-			ProfileLogMsgCreate(0,pProfileChannel,++pProfile->nLogID,g_strCurrentCommand,g_nCurrentCommandLength,0);
-	}
+    pProfile = pServer->pProfile;
+    HASHLIST_LOOKUP(PROFILE_PROFILECHANNEL_HASHLIST,pProfile->hashlistProfileChannels,strArg[0],pProfileChannel);
+    if(pProfileChannel)
+      ProfileLogMsgCreate(0,pProfileChannel,++pProfile->nLogID,g_strCurrentCommand,g_nCurrentCommandLength,0);
+  }
 
-	pServer->cInList = 0;
+  pServer->cInList = 0;
 
-	return 0;
-	strCommand = 0;
+  return 0;
+  strCommand = 0;
 }

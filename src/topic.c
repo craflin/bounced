@@ -25,141 +25,141 @@
 
 int ServerHandlerTopic(PSERVER pServer, char* strCommand, char* strParams)
 {
-	char* strArg[2];
-	unsigned int nArgs;
+  char* strArg[2];
+  unsigned int nArgs;
 
-	if((nArgs = SplitIRCParams(strParams,strArg,sizeof(strArg)/sizeof(*strArg),1)) >= 1)
-	{
-		PPROFILECHANNEL pProfileChannel;
-		PPROFILE pProfile;
+  if((nArgs = SplitIRCParams(strParams,strArg,sizeof(strArg)/sizeof(*strArg),1)) >= 1)
+  {
+    PPROFILECHANNEL pProfileChannel;
+    PPROFILE pProfile;
 
-		pProfile = pServer->pProfile;
-		HASHLIST_LOOKUP(PROFILE_PROFILECHANNEL_HASHLIST,pProfile->hashlistProfileChannels,strArg[0],pProfileChannel);
-		if(pProfileChannel)
-		{
-			ProfileLogMsgCreate(0,pProfileChannel,++pProfile->nLogID,g_strCurrentCommand,g_nCurrentCommandLength,0);
+    pProfile = pServer->pProfile;
+    HASHLIST_LOOKUP(PROFILE_PROFILECHANNEL_HASHLIST,pProfile->hashlistProfileChannels,strArg[0],pProfileChannel);
+    if(pProfileChannel)
+    {
+      ProfileLogMsgCreate(0,pProfileChannel,++pProfile->nLogID,g_strCurrentCommand,g_nCurrentCommandLength,0);
 
-			if(pProfileChannel->strTopic)
-			{
-				FREE(char*,pProfileChannel->strTopic);
-				pProfileChannel->strTopic = 0;
-			}
-			if(pProfileChannel->strTopicSetBy)
-			{
-				FREE(char*,pProfileChannel->strTopicSetBy);
-				pProfileChannel->strTopicSetBy = 0;
-			}
-			pProfileChannel->timeTopicSetTime = 0;
+      if(pProfileChannel->strTopic)
+      {
+        FREE(char*,pProfileChannel->strTopic);
+        pProfileChannel->strTopic = 0;
+      }
+      if(pProfileChannel->strTopicSetBy)
+      {
+        FREE(char*,pProfileChannel->strTopicSetBy);
+        pProfileChannel->strTopicSetBy = 0;
+      }
+      pProfileChannel->timeTopicSetTime = 0;
 
-			if( nArgs > 1 && *strArg[1] && 
-				(pProfileChannel->strTopic = STRDUP(char*,strArg[1])) )
-			{
-				char* str;
+      if( nArgs > 1 && *strArg[1] && 
+        (pProfileChannel->strTopic = STRDUP(char*,strArg[1])) )
+      {
+        char* str;
 
-				if( SplitIRCPrefix(strCommand,&str) &&
-					(pProfileChannel->strTopicSetBy = STRDUP(char*,str)) )
-					pProfileChannel->timeTopicSetTime = g_timeNow;
-			}
-		}
-	}
+        if( SplitIRCPrefix(strCommand,&str) &&
+          (pProfileChannel->strTopicSetBy = STRDUP(char*,str)) )
+          pProfileChannel->timeTopicSetTime = g_timeNow;
+      }
+    }
+  }
 
-	return 0;
+  return 0;
 }
 
 int ServerHandlerNumNoTopic(PSERVER pServer, char* strCommand, char* strParams)
 {
-	char* strArg[1];
+  char* strArg[1];
 
-	if(SplitIRCParams(strParams,strArg,sizeof(strArg)/sizeof(*strArg),0) == sizeof(strArg)/sizeof(*strArg))
-	{
-		PPROFILECHANNEL pProfileChannel;
-		PPROFILE pProfile;
+  if(SplitIRCParams(strParams,strArg,sizeof(strArg)/sizeof(*strArg),0) == sizeof(strArg)/sizeof(*strArg))
+  {
+    PPROFILECHANNEL pProfileChannel;
+    PPROFILE pProfile;
 
-		pProfile = pServer->pProfile;
-		HASHLIST_LOOKUP(PROFILE_PROFILECHANNEL_HASHLIST,pProfile->hashlistProfileChannels,strArg[0],pProfileChannel);
-		if(pProfileChannel)
-		{
-			ProfileLogMsgCreate(0,pProfileChannel,++pProfile->nLogID,g_strCurrentCommand,g_nCurrentCommandLength,0);
+    pProfile = pServer->pProfile;
+    HASHLIST_LOOKUP(PROFILE_PROFILECHANNEL_HASHLIST,pProfile->hashlistProfileChannels,strArg[0],pProfileChannel);
+    if(pProfileChannel)
+    {
+      ProfileLogMsgCreate(0,pProfileChannel,++pProfile->nLogID,g_strCurrentCommand,g_nCurrentCommandLength,0);
 
-			if(pProfileChannel->strTopic)
-			{
-				FREE(char*,pProfileChannel->strTopic);
-				pProfileChannel->strTopic = 0;
-			}
-			if(pProfileChannel->strTopicSetBy)
-			{
-				FREE(char*,pProfileChannel->strTopicSetBy);
-				pProfileChannel->strTopicSetBy = 0;
-			}
-			pProfileChannel->timeTopicSetTime = 0;
-		}
-	}
+      if(pProfileChannel->strTopic)
+      {
+        FREE(char*,pProfileChannel->strTopic);
+        pProfileChannel->strTopic = 0;
+      }
+      if(pProfileChannel->strTopicSetBy)
+      {
+        FREE(char*,pProfileChannel->strTopicSetBy);
+        pProfileChannel->strTopicSetBy = 0;
+      }
+      pProfileChannel->timeTopicSetTime = 0;
+    }
+  }
 
-	return 0;
-	strCommand = 0;
+  return 0;
+  strCommand = 0;
 }
 
 int ServerHandlerNumTopic(PSERVER pServer, char* strCommand, char* strParams)
 {
-	char* strArg[2];
+  char* strArg[2];
 
-	if(SplitIRCParams(strParams,strArg,sizeof(strArg)/sizeof(*strArg),1) == sizeof(strArg)/sizeof(*strArg))
-	{
-		PPROFILECHANNEL pProfileChannel;
-		PPROFILE pProfile;
+  if(SplitIRCParams(strParams,strArg,sizeof(strArg)/sizeof(*strArg),1) == sizeof(strArg)/sizeof(*strArg))
+  {
+    PPROFILECHANNEL pProfileChannel;
+    PPROFILE pProfile;
 
-		pProfile = pServer->pProfile;
-		HASHLIST_LOOKUP(PROFILE_PROFILECHANNEL_HASHLIST,pProfile->hashlistProfileChannels,strArg[0],pProfileChannel);
-		if(pProfileChannel)
-		{
-			ProfileLogMsgCreate(0,pProfileChannel,++pProfile->nLogID,g_strCurrentCommand,g_nCurrentCommandLength,0);
+    pProfile = pServer->pProfile;
+    HASHLIST_LOOKUP(PROFILE_PROFILECHANNEL_HASHLIST,pProfile->hashlistProfileChannels,strArg[0],pProfileChannel);
+    if(pProfileChannel)
+    {
+      ProfileLogMsgCreate(0,pProfileChannel,++pProfile->nLogID,g_strCurrentCommand,g_nCurrentCommandLength,0);
 
-			if(pProfileChannel->strTopic)
-			{
-				FREE(char*,pProfileChannel->strTopic);
-				pProfileChannel->strTopic = 0;
-			}
-			if(pProfileChannel->strTopicSetBy)
-			{
-				FREE(char*,pProfileChannel->strTopicSetBy);
-				pProfileChannel->strTopicSetBy = 0;
-			}
-			pProfileChannel->timeTopicSetTime = 0;
-			pProfileChannel->strTopic = STRDUP(char*,strArg[1]);
-		}
-	}
+      if(pProfileChannel->strTopic)
+      {
+        FREE(char*,pProfileChannel->strTopic);
+        pProfileChannel->strTopic = 0;
+      }
+      if(pProfileChannel->strTopicSetBy)
+      {
+        FREE(char*,pProfileChannel->strTopicSetBy);
+        pProfileChannel->strTopicSetBy = 0;
+      }
+      pProfileChannel->timeTopicSetTime = 0;
+      pProfileChannel->strTopic = STRDUP(char*,strArg[1]);
+    }
+  }
 
-	return 0;
-	strCommand = 0;
+  return 0;
+  strCommand = 0;
 }
 
 int ServerHandlerNumTopicSetBy(PSERVER pServer, char* strCommand, char* strParams)
 {
-	char* strArg[3];
+  char* strArg[3];
 
-	if(SplitIRCParams(strParams,strArg,sizeof(strArg)/sizeof(*strArg),0) == sizeof(strArg)/sizeof(*strArg))
-	{
-		PPROFILECHANNEL pProfileChannel;
-		PPROFILE pProfile;
+  if(SplitIRCParams(strParams,strArg,sizeof(strArg)/sizeof(*strArg),0) == sizeof(strArg)/sizeof(*strArg))
+  {
+    PPROFILECHANNEL pProfileChannel;
+    PPROFILE pProfile;
 
-		pProfile = pServer->pProfile;
-		HASHLIST_LOOKUP(PROFILE_PROFILECHANNEL_HASHLIST,pProfile->hashlistProfileChannels,strArg[0],pProfileChannel);
-		if(pProfileChannel)
-		{
-			ProfileLogMsgCreate(0,pProfileChannel,++pProfile->nLogID,g_strCurrentCommand,g_nCurrentCommandLength,0);
+    pProfile = pServer->pProfile;
+    HASHLIST_LOOKUP(PROFILE_PROFILECHANNEL_HASHLIST,pProfile->hashlistProfileChannels,strArg[0],pProfileChannel);
+    if(pProfileChannel)
+    {
+      ProfileLogMsgCreate(0,pProfileChannel,++pProfile->nLogID,g_strCurrentCommand,g_nCurrentCommandLength,0);
 
-			if(pProfileChannel->strTopicSetBy)
-			{
-				FREE(char*,pProfileChannel->strTopicSetBy);
-				pProfileChannel->strTopicSetBy = 0;
-			}
-			pProfileChannel->timeTopicSetTime = 0;
+      if(pProfileChannel->strTopicSetBy)
+      {
+        FREE(char*,pProfileChannel->strTopicSetBy);
+        pProfileChannel->strTopicSetBy = 0;
+      }
+      pProfileChannel->timeTopicSetTime = 0;
 
-			if( (pProfileChannel->strTopicSetBy = STRDUP(char*,strArg[1])) )
-				pProfileChannel->timeTopicSetTime = atoul(strArg[2]);
-		}
-	}
+      if( (pProfileChannel->strTopicSetBy = STRDUP(char*,strArg[1])) )
+        pProfileChannel->timeTopicSetTime = atoul(strArg[2]);
+    }
+  }
 
-	return 0;
-	strCommand = 0;
+  return 0;
+  strCommand = 0;
 }

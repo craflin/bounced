@@ -23,114 +23,114 @@
 
 int ClientHandlerAdmin(PCLIENT pClient, char* strCommand, char* strParams)
 {
-	char* str;
-	
-	if(*strParams == ':')
-		strParams++;
-	str = NextArg(&strParams);
+  char* str;
+  
+  if(*strParams == ':')
+    strParams++;
+  str = NextArg(&strParams);
 
-	if(*str)
-	{
-		if(!strcasecmp(str,"user") )
-		{
-			str = strCommand+strlen(strCommand);
-			*(str++) = ' ';
-			strcpy(str,"user");
-			return ClientSubhandlerAdminUser(pClient,strCommand,strParams);
-		}
-		if(!strcasecmp(str,"config") )
-		{
-			str = strCommand+strlen(strCommand);
-			*(str++) = ' ';
-			strcpy(str,"config");
-			return ClientSubhandlerAdminConfig(pClient,strCommand,strParams);
-		}
-		if(!strcasecmp(str,"privmsg") )
-		{
-			str = strCommand+strlen(strCommand);
-			*(str++) = ' ';
-			strcpy(str,"privmsg");
-			return ClientSubhandlerAdminPrivmsg(pClient,strCommand,strParams);
-		}
-		if(!strcasecmp(str,"notice") )
-		{
-			str = strCommand+strlen(strCommand);
-			*(str++) = ' ';
-			strcpy(str,"notice");
-			return ClientSubhandlerAdminNotice(pClient,strCommand,strParams);
-		}
-		if(!strcasecmp(str,"wallops") )
-		{
-			str = strCommand+strlen(strCommand);
-			*(str++) = ' ';
-			strcpy(str,"wallops");
-			return ClientSubhandlerAdminWallops(pClient,strCommand,strParams);
-		}
-	}
+  if(*str)
+  {
+    if(!strcasecmp(str,"user") )
+    {
+      str = strCommand+strlen(strCommand);
+      *(str++) = ' ';
+      strcpy(str,"user");
+      return ClientSubhandlerAdminUser(pClient,strCommand,strParams);
+    }
+    if(!strcasecmp(str,"config") )
+    {
+      str = strCommand+strlen(strCommand);
+      *(str++) = ' ';
+      strcpy(str,"config");
+      return ClientSubhandlerAdminConfig(pClient,strCommand,strParams);
+    }
+    if(!strcasecmp(str,"privmsg") )
+    {
+      str = strCommand+strlen(strCommand);
+      *(str++) = ' ';
+      strcpy(str,"privmsg");
+      return ClientSubhandlerAdminPrivmsg(pClient,strCommand,strParams);
+    }
+    if(!strcasecmp(str,"notice") )
+    {
+      str = strCommand+strlen(strCommand);
+      *(str++) = ' ';
+      strcpy(str,"notice");
+      return ClientSubhandlerAdminNotice(pClient,strCommand,strParams);
+    }
+    if(!strcasecmp(str,"wallops") )
+    {
+      str = strCommand+strlen(strCommand);
+      *(str++) = ' ';
+      strcpy(str,"wallops");
+      return ClientSubhandlerAdminWallops(pClient,strCommand,strParams);
+    }
+  }
 
-	if( !ClientMessage(pClient,"Usage is /%s user",strCommand) ||
-		!ClientMessage(pClient,"         /%s config",strCommand) ||
-		!ClientMessage(pClient,"         /%s privmsg",strCommand) ||
-		!ClientMessage(pClient,"         /%s notice",strCommand) ||
-		!ClientMessage(pClient,"         /%s wallops",strCommand) )
-		return 1;
+  if( !ClientMessage(pClient,"Usage is /%s user",strCommand) ||
+    !ClientMessage(pClient,"         /%s config",strCommand) ||
+    !ClientMessage(pClient,"         /%s privmsg",strCommand) ||
+    !ClientMessage(pClient,"         /%s notice",strCommand) ||
+    !ClientMessage(pClient,"         /%s wallops",strCommand) )
+    return 1;
 
-	return 1;
+  return 1;
 }
 
 /* admin subhandlers */
 
 int ClientSubhandlerAdminPrivmsg(PCLIENT pClient, char* strCommand, char* strParams)
 {
-	char* strArg[1];
+  char* strArg[1];
 
-	if(SplitLine(strParams,strArg,sizeof(strArg)/sizeof(*strArg),1) == sizeof(strArg)/sizeof(*strArg))
-	{
-		PCLIENT pCli;
-		for(pCli = g_listClients.pFirst; pCli; pCli = pCli->ll.pNext)
-			ConnectionSendFormat(pCli->pConnection,":%s PRIVMSG %s :%s\r\n",c_strBouncerName,pCli->strNick,strArg[0]);
-		return 1;
-	}
+  if(SplitLine(strParams,strArg,sizeof(strArg)/sizeof(*strArg),1) == sizeof(strArg)/sizeof(*strArg))
+  {
+    PCLIENT pCli;
+    for(pCli = g_listClients.pFirst; pCli; pCli = pCli->ll.pNext)
+      ConnectionSendFormat(pCli->pConnection,":%s PRIVMSG %s :%s\r\n",c_strBouncerName,pCli->strNick,strArg[0]);
+    return 1;
+  }
 
-	if( !ClientMessage(pClient,"Usage is /%s <message>",strCommand) )
-		return 1;
+  if( !ClientMessage(pClient,"Usage is /%s <message>",strCommand) )
+    return 1;
 
-	return 1;
+  return 1;
 }
 
 int ClientSubhandlerAdminNotice(PCLIENT pClient, char* strCommand, char* strParams)
 {
-	char* strArg[1];
+  char* strArg[1];
 
-	if(SplitLine(strParams,strArg,sizeof(strArg)/sizeof(*strArg),1) == sizeof(strArg)/sizeof(*strArg))
-	{
-		PCLIENT pCli;
-		for(pCli = g_listClients.pFirst; pCli; pCli = pCli->ll.pNext)
-			ConnectionSendFormat(pCli->pConnection,":%s NOTICE %s :%s\r\n",c_strBouncerName,pCli->strNick,strArg[0]);
-		return 1;
-	}
+  if(SplitLine(strParams,strArg,sizeof(strArg)/sizeof(*strArg),1) == sizeof(strArg)/sizeof(*strArg))
+  {
+    PCLIENT pCli;
+    for(pCli = g_listClients.pFirst; pCli; pCli = pCli->ll.pNext)
+      ConnectionSendFormat(pCli->pConnection,":%s NOTICE %s :%s\r\n",c_strBouncerName,pCli->strNick,strArg[0]);
+    return 1;
+  }
 
-	if( !ClientMessage(pClient,"Usage is /%s <message>",strCommand) )
-		return 1;
+  if( !ClientMessage(pClient,"Usage is /%s <message>",strCommand) )
+    return 1;
 
-	return 1;
+  return 1;
 }
 
 int ClientSubhandlerAdminWallops(PCLIENT pClient, char* strCommand, char* strParams)
 {
-	char* strArg[1];
+  char* strArg[1];
 
-	if(SplitLine(strParams,strArg,sizeof(strArg)/sizeof(*strArg),1) == sizeof(strArg)/sizeof(*strArg))
-	{
-		PCLIENT pCli;
-		for(pCli = g_listClients.pFirst; pCli; pCli = pCli->ll.pNext)
-			ConnectionSendFormat(pCli->pConnection,":%s WALLOPS :%s\r\n",c_strBouncerName,strArg[0]);
-		return 1;
-	}
+  if(SplitLine(strParams,strArg,sizeof(strArg)/sizeof(*strArg),1) == sizeof(strArg)/sizeof(*strArg))
+  {
+    PCLIENT pCli;
+    for(pCli = g_listClients.pFirst; pCli; pCli = pCli->ll.pNext)
+      ConnectionSendFormat(pCli->pConnection,":%s WALLOPS :%s\r\n",c_strBouncerName,strArg[0]);
+    return 1;
+  }
 
-	if( !ClientMessage(pClient,"Usage is /%s <message>",strCommand) )
-		return 1;
+  if( !ClientMessage(pClient,"Usage is /%s <message>",strCommand) )
+    return 1;
 
-	return 1;
+  return 1;
 }
 

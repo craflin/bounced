@@ -16,8 +16,8 @@
 
 #define HASH_INITTYPE(HASHINFO,nSize) struct tag##HASHINFO \
 { \
-	HASHINFO##_ITEM* ppHash[nSize]; \
-	unsigned int nCount; \
+  HASHINFO##_ITEM* ppHash[nSize]; \
+  unsigned int nCount; \
 }
 
 #define HASH_SIZEOF(HASHINFO) (sizeof(struct tag##HASHINFO))
@@ -27,141 +27,141 @@
 
 #define HASHLINK(HASHINFO) struct \
 { \
-	HASHINFO##_ITEM* pNext; \
+  HASHINFO##_ITEM* pNext; \
 } HASHINFO##_LINK
 
 #define HASH_SIZE(HASHINFO,hashName) (sizeof((hashName).ppHash)/sizeof(*(hashName).ppHash))
 
 #define HASH_INIT(HASHINFO,hashName) \
 { \
-	(hashName).nCount = 0; \
-	memset((hashName).ppHash,0,sizeof((hashName).ppHash)); \
+  (hashName).nCount = 0; \
+  memset((hashName).ppHash,0,sizeof((hashName).ppHash)); \
 }
 
 #define HASH_ADD(HASHINFO,hashName,pItem) \
 { \
-	HASHINFO##_ITEM** ppItem = \
-		&(hashName).ppHash[(HASHINFO##_CHECKSUMPROC((HASHINFO##_KEY((pItem))))) % HASH_SIZE(HASHINFO,hashName)]; \
-	(pItem)->HASHINFO##_LINK.pNext = *ppItem; \
-	*ppItem = (pItem); \
-	(hashName).nCount++; \
+  HASHINFO##_ITEM** ppItem = \
+    &(hashName).ppHash[(HASHINFO##_CHECKSUMPROC((HASHINFO##_KEY((pItem))))) % HASH_SIZE(HASHINFO,hashName)]; \
+  (pItem)->HASHINFO##_LINK.pNext = *ppItem; \
+  *ppItem = (pItem); \
+  (hashName).nCount++; \
 }
 
 #define HASH_SEARCH_ITEM(HASHINFO,hashName,pItem,pItemResult/*out*/) \
 { \
-	for((pItemResult) = (hashName).ppHash[(HASHINFO##_CHECKSUMPROC((HASHINFO##_KEY((pItem))))) % HASH_SIZE(HASHINFO,hashName)]; \
-		(pItemResult); (pItemResult) = (pItemResult)->HASHINFO##_LINK.pNext) \
-		if((pItemResult) == (pItem)) \
-			break; \
+  for((pItemResult) = (hashName).ppHash[(HASHINFO##_CHECKSUMPROC((HASHINFO##_KEY((pItem))))) % HASH_SIZE(HASHINFO,hashName)]; \
+    (pItemResult); (pItemResult) = (pItemResult)->HASHINFO##_LINK.pNext) \
+    if((pItemResult) == (pItem)) \
+      break; \
 }
 
 #define HASH_LOOKUP(HASHINFO,hashName,pKey,pItemResult/*out*/) \
 { \
-	for((pItemResult) = (hashName).ppHash[(HASHINFO##_CHECKSUMPROC((pKey))) % HASH_SIZE(HASHINFO,hashName)]; \
-		(pItemResult); (pItemResult) = (pItemResult)->HASHINFO##_LINK.pNext) \
-		if(HASHINFO##_COMPAREPROC((pKey),(HASHINFO##_KEY((pItemResult))))) \
-			break; \
+  for((pItemResult) = (hashName).ppHash[(HASHINFO##_CHECKSUMPROC((pKey))) % HASH_SIZE(HASHINFO,hashName)]; \
+    (pItemResult); (pItemResult) = (pItemResult)->HASHINFO##_LINK.pNext) \
+    if(HASHINFO##_COMPAREPROC((pKey),(HASHINFO##_KEY((pItemResult))))) \
+      break; \
 }
 
 #define HASH_LOOKUP_POINTER(HASHINFO,hashName,pKey,ppItemResult/*out*/) \
 { \
-	for((ppItemResult) = &(hashName).ppHash[(HASHINFO##_CHECKSUMPROC((pKey))) % HASH_SIZE(HASHINFO,hashName)]; \
-		*(ppItemResult); (ppItemResult) = &(*(ppItemResult))->HASHINFO##_LINK.pNext) \
-		if(HASHINFO##_COMPAREPROC((pKey),(HASHINFO##_KEY((*(ppItemResult)))))) \
-			break; \
+  for((ppItemResult) = &(hashName).ppHash[(HASHINFO##_CHECKSUMPROC((pKey))) % HASH_SIZE(HASHINFO,hashName)]; \
+    *(ppItemResult); (ppItemResult) = &(*(ppItemResult))->HASHINFO##_LINK.pNext) \
+    if(HASHINFO##_COMPAREPROC((pKey),(HASHINFO##_KEY((*(ppItemResult)))))) \
+      break; \
 }
 
 #define HASH_REMOVE_ITEM(HASHINFO,hashName,pItem) \
 { \
-	HASHINFO##_ITEM** ppItem; \
-	for(ppItem = &(hashName).ppHash[(HASHINFO##_CHECKSUMPROC((HASHINFO##_KEY((pItem))))) % HASH_SIZE(HASHINFO,hashName)]; \
-		*ppItem; ppItem = &(*ppItem)->HASHINFO##_LINK.pNext) \
-		if(*ppItem == (pItem)) \
-		{ \
-			*ppItem = (pItem)->HASHINFO##_LINK.pNext; \
-			(hashName).nCount--; \
-			HASHINFO##_FREEPROC((pItem)); \
-			break; \
-		} \
+  HASHINFO##_ITEM** ppItem; \
+  for(ppItem = &(hashName).ppHash[(HASHINFO##_CHECKSUMPROC((HASHINFO##_KEY((pItem))))) % HASH_SIZE(HASHINFO,hashName)]; \
+    *ppItem; ppItem = &(*ppItem)->HASHINFO##_LINK.pNext) \
+    if(*ppItem == (pItem)) \
+    { \
+      *ppItem = (pItem)->HASHINFO##_LINK.pNext; \
+      (hashName).nCount--; \
+      HASHINFO##_FREEPROC((pItem)); \
+      break; \
+    } \
 }
 
 #define HASH_REMOVE_ITEM_NOFREE(HASHINFO,hashName,pItem) \
 { \
-	HASHINFO##_ITEM** ppItem; \
-	for(ppItem = &(hashName).ppHash[(HASHINFO##_CHECKSUMPROC((HASHINFO##_KEY((pItem))))) % HASH_SIZE(HASHINFO,hashName)]; \
-		*ppItem; ppItem = &(*ppItem)->HASHINFO##_LINK.pNext) \
-		if(*ppItem == (pItem)) \
-		{ \
-			*ppItem = (pItem)->HASHINFO##_LINK.pNext; \
-			(hashName).nCount--; \
-			break; \
-		} \
+  HASHINFO##_ITEM** ppItem; \
+  for(ppItem = &(hashName).ppHash[(HASHINFO##_CHECKSUMPROC((HASHINFO##_KEY((pItem))))) % HASH_SIZE(HASHINFO,hashName)]; \
+    *ppItem; ppItem = &(*ppItem)->HASHINFO##_LINK.pNext) \
+    if(*ppItem == (pItem)) \
+    { \
+      *ppItem = (pItem)->HASHINFO##_LINK.pNext; \
+      (hashName).nCount--; \
+      break; \
+    } \
 }
 
 #define HASH_REMOVE_ITEM_POINTER(HASHINFO,hashName,ppItem) \
 { \
-	HASHINFO##_ITEM* pItem = (*ppItem); \
-	*(ppItem) = (*(ppItem))->HASHINFO##_LINK.pNext; \
-	(hashName).nCount--; \
-	HASHINFO##_FREEPROC(pItem); \
+  HASHINFO##_ITEM* pItem = (*ppItem); \
+  *(ppItem) = (*(ppItem))->HASHINFO##_LINK.pNext; \
+  (hashName).nCount--; \
+  HASHINFO##_FREEPROC(pItem); \
 }
 
 #define HASH_REMOVE_ITEM_POINTER_NOFREE(HASHINFO,hashName,ppItem) \
 { \
-	*(ppItem) = (*(ppItem))->HASHINFO##_LINK.pNext; \
-	(hashName).nCount--; \
+  *(ppItem) = (*(ppItem))->HASHINFO##_LINK.pNext; \
+  (hashName).nCount--; \
 }
 
 #define HASH_REMOVE(HASHINFO,hashName,pKey) \
 { \
-	HASHINFO##_ITEM** ppItem; \
-	for(ppItem = &(hashName).ppHash[(HASHINFO##_CHECKSUMPROC((pKey))) % HASH_SIZE(HASHINFO,hashName)]; \
-		*ppItem; ppItem = &(*ppItem)->HASHINFO##_LINK.pNext) \
-		if(HASHINFO##_COMPAREPROC((pKey),(HASHINFO##_KEY((*ppItem))))) \
-		{ \
-			HASHINFO##_ITEM* pItem = *ppItem; \
-			*ppItem = pItem->HASHINFO##_LINK.pNext; \
-			(hashName).nCount--; \
-			HASHINFO##_FREEPROC(pItem); \
-			break; \
-		} \
+  HASHINFO##_ITEM** ppItem; \
+  for(ppItem = &(hashName).ppHash[(HASHINFO##_CHECKSUMPROC((pKey))) % HASH_SIZE(HASHINFO,hashName)]; \
+    *ppItem; ppItem = &(*ppItem)->HASHINFO##_LINK.pNext) \
+    if(HASHINFO##_COMPAREPROC((pKey),(HASHINFO##_KEY((*ppItem))))) \
+    { \
+      HASHINFO##_ITEM* pItem = *ppItem; \
+      *ppItem = pItem->HASHINFO##_LINK.pNext; \
+      (hashName).nCount--; \
+      HASHINFO##_FREEPROC(pItem); \
+      break; \
+    } \
 }
 
 #define HASH_REMOVE_NOFREE(HASHINFO,hashName,pKey) \
 { \
-	HASHINFO##_ITEM** ppItem; \
-	for(ppItem = &(hashName).ppHash[(HASHINFO##_CHECKSUMPROC((pKey))) % HASH_SIZE(HASHINFO,hashName)]; \
-		*ppItem; ppItem = &(*ppItem)->HASHINFO##_LINK.pNext) \
-		if(HASHINFO##_COMPAREPROC((pKey),(HASHINFO##_KEY((*ppItem))))) \
-		{ \
-			HASHINFO##_ITEM* pItem = *ppItem; \
-			*ppItem = pItem->HASHINFO##_LINK.pNext; \
-			(hashName).nCount--; \
-			break; \
-		} \
+  HASHINFO##_ITEM** ppItem; \
+  for(ppItem = &(hashName).ppHash[(HASHINFO##_CHECKSUMPROC((pKey))) % HASH_SIZE(HASHINFO,hashName)]; \
+    *ppItem; ppItem = &(*ppItem)->HASHINFO##_LINK.pNext) \
+    if(HASHINFO##_COMPAREPROC((pKey),(HASHINFO##_KEY((*ppItem))))) \
+    { \
+      HASHINFO##_ITEM* pItem = *ppItem; \
+      *ppItem = pItem->HASHINFO##_LINK.pNext; \
+      (hashName).nCount--; \
+      break; \
+    } \
 }
 
 #define HASH_REMOVE_ALL(HASHINFO,hashName) \
 { \
-	HASHINFO##_ITEM **ppItem,*pItem,**ppItemEnd = &(hashName).ppHash[HASH_SIZE(HASHINFO,hashName)]; \
-	for(ppItem = (hashName).ppHash; ppItem < ppItemEnd; ppItem++) \
-		while((pItem = *ppItem)) \
-		{ \
-			*ppItem = pItem->HASHINFO##_LINK.pNext; \
-			(hashName).nCount--; \
-			HASHINFO##_FREEPROC(pItem); \
-		} \
+  HASHINFO##_ITEM **ppItem,*pItem,**ppItemEnd = &(hashName).ppHash[HASH_SIZE(HASHINFO,hashName)]; \
+  for(ppItem = (hashName).ppHash; ppItem < ppItemEnd; ppItem++) \
+    while((pItem = *ppItem)) \
+    { \
+      *ppItem = pItem->HASHINFO##_LINK.pNext; \
+      (hashName).nCount--; \
+      HASHINFO##_FREEPROC(pItem); \
+    } \
 }
 /*
 #define HASH_REMOVE_ALL_NOFREE(HASHINFO,hashName) \
 { \
-	HASHINFO##_ITEM **ppItem,*pItem,**ppItemEnd = &(hashName).ppHash[HASH_SIZE(HASHINFO,hashName)]; \
-	for(ppItem = (hashName).ppHash; ppItem < ppItemEnd; ppItem++) \
-		while((pItem = *ppItem)) \
-		{ \
-			*ppItem = pItem->HASHINFO##_LINK.pNext; \
-			(hashName).nCount--; \
-		} \
+  HASHINFO##_ITEM **ppItem,*pItem,**ppItemEnd = &(hashName).ppHash[HASH_SIZE(HASHINFO,hashName)]; \
+  for(ppItem = (hashName).ppHash; ppItem < ppItemEnd; ppItem++) \
+    while((pItem = *ppItem)) \
+    { \
+      *ppItem = pItem->HASHINFO##_LINK.pNext; \
+      (hashName).nCount--; \
+    } \
 }
 */
 #define HASH_REMOVE_ALL_NOFREE(HASHINFO,hashName) HASH_INIT(HASHINFO,hashName)
