@@ -18,9 +18,9 @@
 #include <string.h>
 #include <ctype.h>
 
-#include "md5.h"
-
 #include "bounced.h"
+
+#include "md5.h"
 
 int PasswordIsValid(const char* str)
 {
