@@ -1,0 +1,21 @@
+
+targets = {
+  bounced = cApplication + {
+    includePaths = {
+      ".", "src"
+    }
+    root = "src"
+    files = {
+      "src/*.c" = cSource
+      "src/*.h"
+      "config.h"
+    }
+    if tool == "vcxproj" {
+      libs = { "ws2_32" }
+    }
+  }
+}
+
+if tool == "vcxproj" {
+  linkFlags += "/SUBSYSTEM:CONSOLE"
+}
