@@ -1340,6 +1340,9 @@ int ClientHandlerProfile(PCLIENT pClient, char* strCommand, char* strParams)
 					return 1;
 				}
 
+				if(pClient->pProfile == pProfile)
+					return 1; // do nothing since the profile is already attached
+
 				if(pClient->pProfile)
 				{
 					PPROFILE pProfile = pClient->pProfile;
